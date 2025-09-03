@@ -1,20 +1,27 @@
 import express from "express";
+import type { RequestHandler } from "express";
+import produtosRouter from "./produtos.ts";
+import voosRouter from "./voos.ts";
+import { interferir } from "../middlewares/intervir.ts";
 
 const router = express.Router();
 
+// router.use(interferir);
+
+router.use('/produtos', produtosRouter);
+router.use('/voos', voosRouter);
+
+
 router.get('/ping', (req, res) => {
+    console.log('EXECUTOU O PING...');
     res.json({ pong: true });
 });
 
-router.get('/voos/:from/:to', (req, res) => {
-    const { from , to } = req.params;
-    res.json({ flight: 
-        { from: from.toUpperCase(), 
-            to: to.toUpperCase(), 
-            price: 12512} 
-        });
-});
 router.get('/', (req, res) => {
+    console.log('PARAMS', req.params);
+    console.log('QUERY', req.query);
+    console.log('BODY', req.body);
+
     let name = 'Bernardo';
     let age = 20;
 
